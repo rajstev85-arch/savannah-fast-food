@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b2b">
+<meta name="description" content="Savannah Fast Food - meal combos, free delivery and convenient ordering in Nyahururu, Kenya.">
+<title>Savannah Fast Food | Nyahururu</title>
+<style>
+:root{--green:#173b2b;--orange:#f39a24;--cream:#fff8eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:#26332a;font-family:Arial,sans-serif}
+header{background:var(--green);color:white;text-align:center;padding:23px 12px}
+.logo{font-size:27px;font-weight:900;color:var(--orange)}
+header p{margin:7px 0 0}
+.notice{background:var(--orange);text-align:center;padding:10px;font-weight:bold;font-size:13px}
+.actions{display:flex;gap:10px;padding:12px;max-width:800px;margin:auto}
+.actions a{flex:1;text-align:center;padding:14px 7px;color:white;text-decoration:none;border-radius:10px;font-weight:bold}
+.call{background:#246342}.wa{background:#13884b}
+main{max-width:1000px;margin:auto;padding:14px}
+.welcome{text-align:center;padding:15px 0}
+.welcome h2{color:var(--green)}
+.search{width:100%;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:13px 0}
+.filters button{white-space:nowrap;border:1px solid var(--green);border-radius:20px;background:white;color:var(--green);padding:9px 13px}
+.filters button.active{background:var(--green);color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.item{background:white;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #0001}
+.item img{width:100%;height:145px;object-fit:cover;background:#eee}
+.details{padding:12px}
+.item h3{margin:0 0 7px;color:var(--green);font-size:17px}
+.item p{font-size:13px;color:#667067;min-height:32px}
+.price{font-size:19px;font-weight:bold;color:#a45b00}
+.add{width:100%;padding:11px;margin-top:9px;background:var(--green);color:white;border:0;border-radius:8px;font-weight:bold}
+.panel{background:white;padding:15px;border-radius:12px;margin:20px 0}
+.panel h3{color:var(--green)}
+input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:6px 0 12px;font-size:15px}
+textarea{min-height:70px}
+.order{width:100%;padding:15px;background:#13884b;color:white;border:0;border-radius:9px;font-weight:bold;font-size:16px}
+.cartbar{position:sticky;bottom:0;background:#10291e;color:white;padding:13px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.cartbar button{background:var(--orange);border:0;border-radius:8px;padding:10px;font-weight:bold}
+footer{background:var(--green);color:white;text-align:center;padding:20px;font-size:13px}
+#lock{display:none;position:fixed;inset:0;background:#10291ef5;color:white;z-index:10;align-items:center;justify-content:center;text-align:center;padding:20px}
+#lock h2{color:var(--orange)}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.item img{height:110px}.details{padding:9px}.item h3{font-size:14px}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">SAVANNAH FAST FOOD</div>
+ <p>Good food. Easy ordering. Delivered to you.</p>
+</header>
+
+<div class="notice">FREE DELIVERY • PAY AFTER DELIVERY • NYAHURURU</div>
+
+<div class="actions">
+ <a class="call" href="tel:+254799378702">☎ CALL US</a>
+ <a class="wa" href="https://wa.me/254799378702" target="_blank" rel="noopener">WHATSAPP US</a>
+</div>
+
+<main>
+ <div class="welcome">
+  <h2>Welcome to Savannah!</h2>
+  <p>Choose a combo from our menu. We coordinate your meal with food suppliers and arrange delivery.</p>
+  <b>Opening hours: 8:30 AM – 6:00 PM</b>
+  <p id="hoursMessage"></p>
+ </div>
+
+ <input class="search" id="search" placeholder="Search for a combo..." oninput="renderMenu()">
+ <div class="filters" id="filters"></div>
+
+ <h3 style="color:#173b2b">Our Combo Menu — Lowest Prices First</h3>
+ <div class="grid" id="menu"></div>
+
+ <section class="panel" id="order">
+  <h3>Your shopping cart</h3>
+  <div id="cartItems">Your cart is empty.</div>
+  <p><b>Total: KSh <span id="total">0</span></b></p>
+
+  <label for="customer">Your name</label>
+  <input id="customer" placeholder="Enter your name">
+
+  <label for="location">Delivery location</label>
+  <input id="location" placeholder="Where should we deliver?">
+
+  <label for="instructions">Extra instructions (optional)</label>
+  <textarea id="instructions" placeholder="Any additional instructions"></textarea>
+
+  <button class="order" onclick="sendOrder()">SEND ORDER THROUGH WHATSAPP</button>
+  <p style="font-size:12px">You can share your location directly through WhatsApp. Payment is after delivery.</p>
+ </section>
+</main>
+
+<div class="cartbar">
+ <span>🛒 Cart: <b id="count">0</b> items</span>
+ <button onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">VIEW CART</button>
+</div>
+
+<footer>
+ <b>SAVANNAH FAST FOOD</b>
+ <p>Nyahururu, Laikipia County, Kenya</p>
+ <p>Call or WhatsApp: 0799 378 702</p>
+ <p>Free delivery • Pay after delivery</p>
+</footer>
+
+<div id="lock">
+ <div>
+  <h2>Savannah is closed</h2>
+  <p>Ordering hours are 8:30 AM to 6:00 PM.</p>
+  <p id="countdown"></p>
+ </div>
+</div>
+
+<script>
+const phone="254799378702";
+
+const photos={
+ chicken:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80",
+ choma:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
+ pilau:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+ snack:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
+ chapati:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80",
+ family:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80"
+};
+
+const raw=[
+["Savannah Chicken Feast","½ broiler chicken, chips, 300ml soda",780,"Chicken lovers","chicken"],
+["Kienyeji Traditional Feast","¼ kienyeji chicken, mukimo, vegetables",720,"Chicken lovers","chicken"],
+["Chicken & Ugali Delight","½ broiler chicken, ugali, vegetables",690,"Chicken lovers","chicken"],
+["Chicken Pilau Feast","½ broiler chicken, pilau",750,"Chicken lovers","pilau"],
+["Chicken Chips & Soda","½ broiler chicken, chips, 700ml soda",800,"Chicken lovers","chicken"],
+["Beef Choma Feast","½ beef choma, ugali, vegetables",690,"Choma lovers","choma"],
+["Goat Choma Feast","½ goat choma, ugali, vegetables",690,"Choma lovers","choma"],
+["Mukimo Choma Special","Mukimo, ½ beef choma, vegetables",820,"Choma lovers","choma"],
+["Pilau & Beef Choma","Pilau, ½ beef choma",750,"Choma lovers","pilau"],
+["Goat Choma & Chips","½ goat choma, chips",700,"Choma lovers","choma"],
+["Pilau Meat Delight","Pilau, fry meat, vegetables",570,"Kenyan favourites","pilau"],
+["Chapati Meat Treat","2 chapatis, fry meat, vegetables",470,"Kenyan favourites","chapati"],
+["Mukimo & Fry Meat","Mukimo, fry meat",500,"Kenyan favourites","choma"],
+["Ugali Fry Meat Special","Ugali, fry meat, vegetables",440,"Kenyan favourites","choma"],
+["Chips & Fry Meat","Chips, fry meat",450,"Kenyan favourites","snack"],
+["Double Pilau Meat Feast","2 pilau, 2 fry meat, 2 vegetables",1140,"Double meals","pilau"],
+["Double Choma Special","2 mukimo, 2 × ½ beef choma, 2 vegetables",1640,"Double meals","choma"],
+["Double Chicken Delight","2 × ½ broiler chicken, 2 chips, 2 × 300ml soda",1560,"Double meals","chicken"],
+["Double Kienyeji Feast","2 × ¼ kienyeji chicken, 2 ugali, 2 vegetables",1180,"Double meals","chicken"],
+["Couples Pilau & Chicken","½ broiler chicken, 2 pilau",950,"Couples deals","pilau"],
+["Couples Choma Mix","½ beef choma, ½ goat choma, 2 ugali",1240,"Couples deals","choma"],
+["Couples Chips & Meat","2 chips, fry meat, 2 × 300ml soda",760,"Couples deals","snack"],
+["Family Chicken Feast","2 × ½ broiler chicken, 4 chips, 2 × 700ml soda",1900,"Family deals","family"],
+["Family Mixed Feast","½ broiler chicken, ½ beef choma, 2 pilau, 2 vegetables",1640,"Family deals","family"],
+["Savannah Snack Box","Kebab, beef roll, 300ml soda",270,"Snack combos","snack"],
+["Breakfast Delight","Toasted bread (2 slices), black coffee",250,"Snack combos","snack"],
+["Sandwich & White Coffee","Sandwich, white coffee",350,"Snack combos","snack"],
+["Sandwich & Black Coffee","Sandwich, black coffee",300,"Snack combos","snack"],
+["Toast & Roll Snack","Toast with Blue Band, beef roll, 300ml soda",230,"Snack combos","snack"],
+["Pilau Lovers Special","2 pilau, 2 fry meat, 2 vegetables",1140,"Special offers","pilau"],
+["Choma Lovers Offer","2 mukimo, 2 × ½ beef choma, 2 vegetables",1640,"Special offers","choma"],
+["Chicken Weekend Offer","½ broiler chicken, chips, 300ml soda",780,"Special offers","chicken"],
+["Pilau & Beef Choma Special","Pilau, ½ beef choma",750,"Special offers","pilau"],
+["Chips & Fry Meat Special","Chips, fry meat",450,"Special offers","snack"],
+["Mukimo & Goat Choma Special","Mukimo, ½ goat choma",750,"Special offers","choma"],
+["Pilau & Fry Meat Special","Pilau, fry meat",500,"Special offers","pilau"],
+["Chapati & Fry Meat Special","2 chapatis, fry meat",400,"Special offers","chapati"],
+["Kienyeji & Chips Delight","¼ kienyeji chicken, chips",600,"More combos","chicken"],
+["Goat Choma & Pilau","½ goat choma, pilau",750,"More combos","pilau"],
+["Beef Choma & Chapati","½ beef choma, 2 chapatis",650,"More combos","chapati"],
+["Chicken & Pilau Special","½ broiler chicken, pilau",750,"More combos","chicken"],
+["Kienyeji Ugali Special","¼ kienyeji chicken, ugali, vegetables",590,"More combos","chicken"]
+];
+
+// Sort all combos from the lowest price to the highest price.
+const meals=raw.map((x,i)=>({
+ id:i,
+ name:x[0],
+ description:x[1],
+ price:x[2],
+ category:x[3],
+ photo:photos[x[4]]
+})).sort((a,b)=>a.price-b.price);
+
+let cart={};
+let category="All";
+
+function renderFilters(){
+ const cats=["All",...new Set(meals.map(m=>m.category))];
+ document.getElementById("filters").innerHTML=cats.map(c=>
+ `<button class="${category===c?'active':''}" onclick="chooseCategory('${c}')">${c}</button>`
+ ).join("");
+}
+
+function chooseCategory(c){
+ category=c;
+ renderFilters();
+ renderMenu();
+}
+
+function renderMenu(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=meals.filter(m=>
+ (category==="All"||m.category===category)&&
+ (m.name+" "+m.description).toLowerCase().includes(q)
+ );
+
+ document.getElementById("menu").innerHTML=list.length?
+ list.map(m=>`
+ <article class="item">
+  <img src="${m.photo}" alt="${m.name}" loading="lazy">
+  <div class="details">
+   <h3>${m.name}</h3>
+   <p>${m.description}</p>
+   <div class="price">KSh ${m.price.toLocaleString("en-KE")}</div>
+   <button class="add" onclick="addToCart(${m.id})">ADD TO CART</button>
+  </div>
+ </article>
+ `).join(""):"<p>No combos found. Try another search.</p>";
+}
+
+function addToCart(id){
+ cart[id]=(cart[id]||0)+1;
+ updateCart();
+}
+
+function changeQty(id,n){
+ cart[id]=(cart[id]||0)+n;
+ if(cart[id]<=0)delete cart[id];
+ updateCart();
+}
+
+function updateCart(){
+ let total=0,count=0,html="";
+
+ for(const id in cart){
+  const m=meals.find(item=>item.id===Number(id));
+  const qty=cart[id];
+  const sub=m.price*qty;
+  total+=sub;
+  count+=qty;
+
+  html+=`
+  <div style="padding:9px 0;border-bottom:1px solid #eee">
+   <b>${m.name}</b><br>
+   KSh ${m.price} × ${qty} = KSh ${sub}
+   <button onclick="changeQty(${id},-1)">−</button>
+   <button onclick="changeQty(${id},1)">+</button>
+  </div>`;
+ }
+
+ document.getElementById("cartItems").innerHTML=html||"Your cart is empty.";
+ document.getElementById("total").textContent=total.toLocaleString("en-KE");
+ document.getElementById("count").textContent=count;
+}
+
+function sendOrder(){
+ const customer=document.getElementById("customer").value.trim();
+ const location=document.getElementById("location").value.trim();
+
+ if(!Object.keys(cart).length){
+  alert("Please add a combo to your cart.");
+  return;
+ }
+ if(!customer||!location){
+  alert("Please enter your name and delivery location.");
+  return;
+ }
+
+ let total=0;
+ const lines=[];
+
+ for(const id in cart){
+  const m=meals.find(item=>item.id===Number(id));
+  const sub=m.price*cart[id];
+  total+=sub;
+  lines.push(`${m.name} x ${cart[id]} = KSh ${sub}`);
+ }
+
+ const instructions=document.getElementById("instructions").value.trim();
+
+ const message=
+ `Hello Savannah Fast Food! I would like to place an order:\n\n`+
+ `${lines.join("\n")}\n\n`+
+ `TOTAL: KSh ${total}\n`+
+ `Name: ${customer}\n`+
+ `Delivery location: ${location}\n`+
+ `Instructions: ${instructions||"None"}\n\n`+
+ `Please confirm my order. Payment after delivery.`;
+
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(message),"_blank");
+}
+
+function updateHours(){
+ const parts=new Intl.DateTimeFormat("en-GB",{
+  timeZone:"Africa/Nairobi",
+  hour:"2-digit",
+  minute:"2-digit",
+  hourCycle:"h23"
+ }).formatToParts(new Date());
+
+ const hour=Number(parts.find(p=>p.type==="hour").value);
+ const minute=Number(parts.find(p=>p.type==="minute").value);
+ const time=hour*60+minute;
+ const opening=8*60+30;
+ const closing=18*60;
+ const closed=time<opening||time>=closing;
+
+ document.getElementById("lock").style.display=closed?"flex":"none";
+
+ document.getElementById("hoursMessage").textContent=closed?
+ "Ordering is currently closed. Please come back during opening hours.":
+ "We are currently within our opening hours.";
+
+ if(closed){
+  const remaining=time<opening?opening-time:1440-time+opening;
+  const h=Math.floor(remaining/60);
+  const m=remaining%60;
+  document.getElementById("countdown").textContent=
+  `Reopens in ${h} hours and ${m} minutes`;
+ }
+}
+
+renderFilters();
+renderMenu();
+updateCart();
+updateHours();
+setInterval(updateHours,30000);
+</script>
+</body>
+  </html>
+  
