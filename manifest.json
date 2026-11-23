@@ -1,3 +1,4 @@
+
 {
   "name": "Savannah Fast Food",
   "short_name": "Savannah",
@@ -6,17 +7,19 @@
   "display": "standalone",
   "background_color": "#101820",
   "theme_color": "#f28c28",
-  "description": "Order delicious meals from Savannah Fast Food.",
+  "description": "Order delicious meal combos from Savannah Fast Food in Nyahururu, Kenya.",
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "./icons/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "./icons/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
