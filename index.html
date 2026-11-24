@@ -1,785 +1,439 @@
 
-  font-size: 13px;
-}
-
-.actions {
-  display: flex;
-  gap: 9px;
-  padding: 12px;
-  max-width: 800px;
-  margin: auto;
-}
-
-.actions a,
-.actions button {
-  flex: 1;
-  text-align: center;
-  padding: 13px 5px;
-  color: white;
-  text-decoration: none;
-  border: 0;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 13px;
-}
-
-.call {
-  background: #246342;
-}
-
-.wa {
-  background: #13884b;
-}
-
-.install-link {
-  background: #b76a0b;
-}
-
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 14px;
-}
-
-.welcome {
-  text-align: center;
-  padding: 15px 0;
-}
-
-.welcome h2 {
-  color: var(--green);
-}
-
-#hoursMessage {
-  font-weight: bold;
-  color: var(--green);
-}
-
-.search {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-.filters {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 13px 0;
-}
-
-.filters button {
-  white-space: nowrap;
-  border: 1px solid var(--green);
-  border-radius: 20px;
-  background: white;
-  color: var(--green);
-  padding: 9px 13px;
-}
-
-.filters button.active {
-  background: var(--green);
-  color: white;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-}
-
-.item {
-  background: white;
-  border-radius: 13px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px #0001;
-}
-
-.item img {
-  width: 100%;
-  height: 145px;
-  object-fit: cover;
-  background: #eee;
-}
-
-.details {
-  padding: 12px;
-}
-
-.item h3 {
-  margin: 0 0 7px;
-  color: var(--green);
-  font-size: 17px;
-}
-
-.item p {
-  font-size: 13px;
-  color: #667067;
-  min-height: 32px;
-}
-
-.price {
-  font-size: 19px;
-  font-weight: bold;
-  color: #a45b00;
-}
-
-.add {
-  width: 100%;
-  padding: 11px;
-  margin-top: 9px;
-  background: var(--green);
-  color: white;
-  border: 0;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.panel {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  margin: 20px 0;
-}
-
-.panel h3 {
-  color: var(--green);
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin: 6px 0 12px;
-  font-size: 15px;
-}
-
-textarea {
-  min-height: 70px;
-}
-
-.order {
-  width: 100%;
-  padding: 15px;
-  background: #13884b;
-  color: white;
-  border: 0;
-  border-radius: 9px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.cartbar {
-  position: sticky;
-  bottom: 0;
-  background: var(--dark);
-  color: white;
-  padding: 13px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 5;
-}
-
-.cartbar button {
-  background: var(--orange);
-  border: 0;
-  border-radius: 8px;
-  padding: 10px;
-  font-weight: bold;
-}
-
-footer {
-  background: var(--green);
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 13px;
-}
-
-footer button {
-  background: var(--orange);
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 18px;
-  font-weight: bold;
-}
-
-.install-banner {
-  display: none;
-  background: #fff1d8;
-  border: 1px solid #e4b86e;
-  border-radius: 12px;
-  padding: 14px;
-  margin: 12px auto;
-  max-width: 800px;
-  text-align: center;
-}
-
-.install-banner h3 {
-  margin: 0 0 7px;
-  color: var(--green);
-}
-
-.install-banner p {
-  font-size: 13px;
-}
-
-.install-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.install-buttons button {
-  flex: 1;
-  padding: 11px;
-  border: 0;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.install-now {
-  background: var(--green);
-  color: white;
-}
-
-.install-later {
-  background: #ddd;
-  color: #222;
-}
-
-#lock {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #10291ef5;
-  color: white;
-  z-index: 20;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-}
-
-#lock h2 {
-  color: var(--orange);
-}
-
-#lock p {
-  line-height: 1.6;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-}
-
-@media(max-width: 520px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .item img {
-    height: 110px;
-  }
-
-  .details {
-    padding: 9px;
-  }
-
-  .item h3 {
-    font-size: 14px;
-  }
-
-  .item p {
-    font-size: 12px;
-  }
-
-  .price {
-    font-size: 16px;
-  }
-
-  .actions {
-    gap: 6px;
-  }
-
-  .actions a,
-  .actions button {
-    font-size: 11px;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b2b">
+<meta name="description" content="Savannah Fast Food, Nyahururu. Delicious meal combos, free delivery and easy WhatsApp ordering.">
+<title>Savannah Fast Food | Nyahururu</title>
+<link rel="manifest" href="./manifest.json">
+<style>
+:root{--green:#173b2b;--dark:#10291e;--orange:#f39a24;--cream:#fff8eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:#26332a;font-family:Arial,sans-serif}
+header{background:var(--green);color:white;text-align:center;padding:24px 12px}
+.logo{font-size:27px;font-weight:900;color:var(--orange)}
+header p{margin:7px 0 0}
+.notice{background:var(--orange);text-align:center;padding:11px;font-weight:bold;font-size:13px}
+.actions{display:flex;gap:9px;padding:12px;max-width:850px;margin:auto}
+.actions a,.actions button{flex:1;text-align:center;padding:13px 5px;color:white;text-decoration:none;border:0;border-radius:10px;font-weight:bold;font-size:13px}
+.call{background:#246342}.wa{background:#13884b}.install-link{background:#b76a0b}
+main{max-width:1000px;margin:auto;padding:14px}
+.welcome{text-align:center;padding:15px 0}
+.welcome h2{color:var(--green)}
+#hoursMessage{font-weight:bold;color:var(--green)}
+.search{width:100%;padding:14px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:13px 0}
+.filters button{white-space:nowrap;border:1px solid var(--green);border-radius:20px;background:white;color:var(--green);padding:9px 13px}
+.filters button.active{background:var(--green);color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.item{background:white;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #0001}
+.item img{width:100%;height:145px;object-fit:cover;background:#eee}
+.details{padding:12px}
+.item h3{margin:0 0 7px;color:var(--green);font-size:17px}
+.item p{font-size:13px;color:#667067;min-height:32px}
+.price{font-size:19px;font-weight:bold;color:#a45b00}
+.add{width:100%;padding:11px;margin-top:9px;background:var(--green);color:white;border:0;border-radius:8px;font-weight:bold}
+.panel{background:white;padding:15px;border-radius:12px;margin:20px 0}
+.panel h3{color:var(--green)}
+input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:6px 0 12px;font-size:15px}
+textarea{min-height:70px}
+.order{width:100%;padding:15px;background:#13884b;color:white;border:0;border-radius:9px;font-weight:bold;font-size:16px}
+.cartbar{position:sticky;bottom:0;background:var(--dark);color:white;padding:13px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.cartbar button{background:var(--orange);border:0;border-radius:8px;padding:10px;font-weight:bold}
+footer{background:var(--green);color:white;text-align:center;padding:20px;font-size:13px}
+footer button{background:var(--orange);border:0;border-radius:8px;padding:11px 18px;font-weight:bold}
+.install-banner{display:none;background:#fff1d8;border:1px solid #e4b86e;border-radius:12px;padding:14px;margin:12px auto;max-width:800px;text-align:center}
+.install-banner h3{margin:0 0 7px;color:var(--green)}
+.install-buttons{display:flex;gap:10px}
+.install-buttons button{flex:1;padding:11px;border:0;border-radius:8px;font-weight:bold}
+.install-now{background:var(--green);color:white}
+.install-later{background:#ddd;color:#222}
+button{cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:520px){
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.item img{height:110px}.details{padding:9px}
+.item h3{font-size:14px}.item p{font-size:12px}
+.price{font-size:16px}.actions{gap:6px}
+.actions a,.actions button{font-size:11px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">SAVANNAH FAST FOOD</div>
-  <p>Good food. Easy ordering. Delivered to you.</p>
+ <div class="logo">SAVANNAH FAST FOOD</div>
+ <p>Good food. Easy ordering. Delivered to you.</p>
 </header>
 
-<div class="notice">
-  FREE DELIVERY • PAY AFTER DELIVERY • NYAHURURU
-</div>
+<div class="notice">FREE DELIVERY • PAY AFTER DELIVERY • NYAHURURU</div>
 
 <div class="install-banner" id="installBanner">
-  <h3>Install Savannah Fast Food</h3>
-  <p>Get quick access to Savannah directly from your phone's home screen.</p>
-  <div class="install-buttons">
-    <button class="install-now" onclick="installApp()">INSTALL</button>
-    <button class="install-later" onclick="dismissInstall()">NOT NOW</button>
-  </div>
-  <p id="installHelp"></p>
+ <h3>Install Savannah Fast Food</h3>
+ <p>Get quick access to Savannah from your phone's home screen.</p>
+ <div class="install-buttons">
+  <button class="install-now" id="installNow">INSTALL</button>
+  <button class="install-later" id="installLater">NOT NOW</button>
+ </div>
+ <p id="installHelp"></p>
 </div>
 
 <div class="actions">
-  <a class="call" href="tel:+254799378702">☎ CALL US</a>
-  <a class="wa" href="https://wa.me/254799378702" target="_blank" rel="noopener">WHATSAPP US</a>
-  <button class="install-link" onclick="showInstall()">INSTALL APP</button>
+ <a class="call" href="tel:+254799378702">☎ CALL US</a>
+ <a class="wa" href="https://wa.me/254799378702" target="_blank" rel="noopener">WHATSAPP US</a>
+ <button class="install-link" id="showInstall">INSTALL APP</button>
 </div>
 
 <main>
+ <div class="welcome">
+  <h2>Welcome to Savannah!</h2>
+  <p>Choose a combo from our menu. We coordinate your meal with suitable food suppliers and arrange delivery.</p>
+  <b>Opening hours: 8:30 AM – 6:00 PM Kenya time</b>
+  <p id="hoursMessage" aria-live="polite">Checking opening hours...</p>
+ </div>
 
-  <div class="welcome">
-    <h2>Welcome to Savannah!</h2>
-    <p>
-      Choose a combo from our menu. We coordinate your meal
-      with suitable food suppliers and arrange delivery.
-    </p>
-    <b>Opening hours: 8:30 AM – 6:00 PM</b>
-    <p id="hoursMessage">Checking opening hours...</p>
-  </div>
+ <input class="search" id="search" placeholder="Search for a combo..." aria-label="Search combos">
+ <div class="filters" id="filters"></div>
 
-  <input
-    class="search"
-    id="search"
-    placeholder="Search for a combo..."
-    aria-label="Search combos"
-    oninput="renderMenu()"
-  >
+ <h3 style="color:#173b2b">Our Combo Menu — Lowest Prices First</h3>
+ <div class="grid" id="menu"></div>
 
-  <div class="filters" id="filters"></div>
+ <section class="panel" id="order">
+  <h3>Your shopping cart</h3>
+  <div id="cartItems">Your cart is empty.</div>
+  <p><b>Total: KSh <span id="total">0</span></b></p>
 
-  <h3 style="color:#173b2b">
-    Our Combo Menu — Lowest Prices First
-  </h3>
+  <label for="customer">Your name</label>
+  <input id="customer" autocomplete="name" placeholder="Enter your name">
 
-  <div class="grid" id="menu"></div>
+  <label for="location">Delivery location</label>
+  <input id="location" placeholder="Where should we deliver?">
 
-  <section class="panel" id="order">
-    <h3>Your shopping cart</h3>
+  <label for="instructions">Extra instructions (optional)</label>
+  <textarea id="instructions" placeholder="Any additional instructions"></textarea>
 
-    <div id="cartItems">Your cart is empty.</div>
-
-    <p><b>Total: KSh <span id="total">0</span></b></p>
-
-    <label for="customer">Your name</label>
-    <input id="customer" placeholder="Enter your name">
-
-    <label for="location">Delivery location</label>
-    <input id="location" placeholder="Where should we deliver?">
-
-    <label for="instructions">Extra instructions (optional)</label>
-    <textarea
-      id="instructions"
-      placeholder="Any additional instructions"
-    ></textarea>
-
-    <button class="order" id="sendOrderButton" onclick="sendOrder()">
-      SEND ORDER THROUGH WHATSAPP
-    </button>
-
-    <p style="font-size:12px">
-      You can share your live location directly through WhatsApp.
-      Payment is after delivery.
-    </p>
-  </section>
-
+  <button class="order" id="sendOrder">SEND ORDER THROUGH WHATSAPP</button>
+  <p style="font-size:12px">You can share your live location directly through WhatsApp. Payment is after delivery.</p>
+ </section>
 </main>
 
 <div class="cartbar">
-  <span>🛒 Cart: <b id="count">0</b> items</span>
-  <button onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">
-    VIEW CART
-  </button>
+ <span>🛒 Cart: <b id="count">0</b> items</span>
+ <button id="viewCart">VIEW CART</button>
 </div>
 
 <footer>
-  <b>SAVANNAH FAST FOOD</b>
-  <p>Nyahururu, Laikipia County, Kenya</p>
-  <p>Call or WhatsApp: 0799 378 702</p>
-  <p>Free delivery • Pay after delivery</p>
-  <button onclick="showInstall()">INSTALL SAVANNAH APP</button>
+ <b>SAVANNAH FAST FOOD</b>
+ <p>Nyahururu, Laikipia County, Kenya</p>
+ <p>Call or WhatsApp: 0799 378 702</p>
+ <p>Free delivery • Pay after delivery</p>
+ <button id="footerInstall">INSTALL SAVANNAH APP</button>
 </footer>
-
-<div id="lock">
-  <div>
-    <h2>Savannah is closed</h2>
-    <p>Ordering hours are 8:30 AM to 6:00 PM Kenya time.</p>
-    <p id="countdown"></p>
-    <p>Please come back during opening hours.</p>
-  </div>
-</div>
 
 <script>
 "use strict";
 
-const phone = "254799378702";
+const PHONE="254799378702";
 
-const photos = {
-  chicken: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80",
-  choma: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
-  pilau: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
-  snack: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
-  chapati: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80",
-  family: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80"
+const photos={
+ chicken:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80",
+ choma:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
+ pilau:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+ snack:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
+ chapati:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80",
+ family:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80"
 };
 
-const raw = [
-  ["Savannah Chicken Feast","½ broiler chicken, chips, 300ml soda",780,"Chicken lovers","chicken"],
-  ["Kienyeji Traditional Feast","¼ kienyeji chicken, mukimo, vegetables",720,"Chicken lovers","chicken"],
-  ["Chicken & Ugali Delight","½ broiler chicken, ugali, vegetables",690,"Chicken lovers","chicken"],
-  ["Chicken Pilau Feast","½ broiler chicken, pilau",750,"Chicken lovers","pilau"],
-  ["Chicken Chips & Soda","½ broiler chicken, chips, 700ml soda",800,"Chicken lovers","chicken"],
-  ["Beef Choma Feast","½ beef choma, ugali, vegetables",690,"Choma lovers","choma"],
-  ["Goat Choma Feast","½ goat choma, ugali, vegetables",690,"Choma lovers","choma"],
-  ["Mukimo Choma Special","Mukimo, ½ beef choma, vegetables",820,"Choma lovers","choma"],
-  ["Pilau & Beef Choma","Pilau, ½ beef choma",750,"Choma lovers","pilau"],
-  ["Goat Choma & Chips","½ goat choma, chips",700,"Choma lovers","choma"],
-  ["Pilau Meat Delight","Pilau, fry meat, vegetables",570,"Kenyan favourites","pilau"],
-  ["Chapati Meat Treat","2 chapatis, fry meat, vegetables",470,"Kenyan favourites","chapati"],
-  ["Mukimo & Fry Meat","Mukimo, fry meat",500,"Kenyan favourites","choma"],
-  ["Ugali Fry Meat Special","Ugali, fry meat, vegetables",440,"Kenyan favourites","choma"],
-  ["Chips & Fry Meat","Chips, fry meat",450,"Kenyan favourites","snack"],
-  ["Double Pilau Meat Feast","2 pilau, 2 fry meat, 2 vegetables",1140,"Double meals","pilau"],
-  ["Double Choma Special","2 mukimo, 2 × ½ beef choma, 2 vegetables",1640,"Double meals","choma"],
-  ["Double Chicken Delight","2 × ½ broiler chicken, 2 chips, 2 × 300ml soda",1560,"Double meals","chicken"],
-  ["Double Kienyeji Feast","2 × ¼ kienyeji chicken, 2 ugali, 2 vegetables",1180,"Double meals","chicken"],
-  ["Couples Pilau & Chicken","½ broiler chicken, 2 pilau",950,"Couples deals","pilau"],
-  ["Couples Choma Mix","½ beef choma, ½ goat choma, 2 ugali",1240,"Couples deals","choma"],
-  ["Couples Chips & Meat","2 chips, fry meat, 2 × 300ml soda",760,"Couples deals","snack"],
-  ["Family Chicken Feast","2 × ½ broiler chicken, 4 chips, 2 × 700ml soda",1900,"Family deals","family"],
-  ["Family Mixed Feast","½ broiler chicken, ½ beef choma, 2 pilau, 2 vegetables",1640,"Family deals","family"],
-  ["Savannah Snack Box","Kebab, beef roll, 300ml soda",270,"Snack combos","snack"],
-  ["Breakfast Delight","Toasted bread (2 slices), black coffee",250,"Snack combos","snack"],
-  ["Sandwich & White Coffee","Sandwich, white coffee",350,"Snack combos","snack"],
-  ["Sandwich & Black Coffee","Sandwich, black coffee",300,"Snack combos","snack"],
-  ["Toast & Roll Snack","Toast with Blue Band, beef roll, 300ml soda",230,"Snack combos","snack"],
-  ["Pilau Lovers Special","2 pilau, 2 fry meat, 2 vegetables",1140,"Special offers","pilau"],
-  ["Choma Lovers Offer","2 mukimo, 2 × ½ beef choma, 2 vegetables",1640,"Special offers","choma"],
-  ["Chicken Weekend Offer","½ broiler chicken, chips, 300ml soda",780,"Special offers","chicken"],
-  ["Pilau & Beef Choma Special","Pilau, ½ beef choma",750,"Special offers","pilau"],
-  ["Chips & Fry Meat Special","Chips, fry meat",450,"Special offers","snack"],
-  ["Mukimo & Goat Choma Special","Mukimo, ½ goat choma",750,"Special offers","choma"],
-  ["Pilau & Fry Meat Special","Pilau, fry meat",500,"Special offers","pilau"],
-  ["Chapati & Fry Meat Special","2 chapatis, fry meat",400,"Special offers","chapati"],
-  ["Kienyeji & Chips Delight","¼ kienyeji chicken, chips",600,"More combos","chicken"],
-  ["Goat Choma & Pilau","½ goat choma, pilau",750,"More combos","pilau"],
-  ["Beef Choma & Chapati","½ beef choma, 2 chapatis",650,"More combos","chapati"],
-  ["Chicken & Pilau Special","½ broiler chicken, pilau",750,"More combos","chicken"],
-  ["Kienyeji Ugali Special","¼ kienyeji chicken, ugali, vegetables",590,"More combos","chicken"]
+/* 42 Savannah combos.
+   Prices use the individual selling prices supplied by the owner.
+   Delivery is free to customers and is included in the profit check.
+*/
+const comboData=[
+["Savannah Chicken Feast","½ broiler chicken, chips, 300ml soda",780,"Chicken lovers","chicken"],
+["Kienyeji Traditional Feast","¼ kienyeji chicken, mukimo, vegetables",730,"Chicken lovers","chicken"],
+["Chicken & Ugali Delight","½ broiler chicken, ugali, vegetables",710,"Chicken lovers","chicken"],
+["Chicken Pilau Feast","½ broiler chicken, pilau",750,"Chicken lovers","pilau"],
+["Chicken Chips & Soda","½ broiler chicken, chips, 700ml soda",800,"Chicken lovers","chicken"],
+["Beef Choma Feast","½ beef choma, ugali, vegetables",710,"Choma lovers","choma"],
+["Goat Choma Feast","½ goat choma, ugali, vegetables",710,"Choma lovers","choma"],
+["Mukimo Choma Special","Mukimo, ½ beef choma, vegetables",830,"Choma lovers","choma"],
+["Pilau & Beef Choma","Pilau, ½ beef choma",750,"Choma lovers","pilau"],
+["Goat Choma & Chips","½ goat choma, chips",700,"Choma lovers","choma"],
+["Pilau Meat Delight","Pilau, fry meat, vegetables",580,"Kenyan favourites","pilau"],
+["Chapati Meat Treat","2 chapatis, fry meat, vegetables",480,"Kenyan favourites","chapati"],
+["Mukimo & Fry Meat","Mukimo, fry meat",500,"Kenyan favourites","choma"],
+["Ugali Fry Meat Special","Ugali, fry meat, vegetables",460,"Kenyan favourites","choma"],
+["Chips & Fry Meat","Chips, fry meat",450,"Kenyan favourites","snack"],
+["Double Pilau Meat Feast","2 pilau, 2 fry meat, 2 vegetables",1160,"Double meals","pilau"],
+["Double Choma Special","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Double meals","choma"],
+["Double Chicken Delight","2 × ½ broiler chicken, 2 chips, 2 × 300ml soda",1560,"Double meals","chicken"],
+["Double Kienyeji Feast","2 × ¼ kienyeji chicken, 2 ugali, 2 vegetables",1220,"Double meals","chicken"],
+["Couples Pilau & Chicken","½ broiler chicken, 2 pilau",950,"Couples deals","pilau"],
+["Couples Choma Mix","½ beef choma, ½ goat choma, 2 ugali",1260,"Couples deals","choma"],
+["Couples Chips & Meat","2 chips, fry meat, 2 × 300ml soda",760,"Couples deals","snack"],
+["Family Chicken Feast","2 × ½ broiler chicken, 4 chips, 2 × 700ml soda",1900,"Family deals","family"],
+["Family Mixed Feast","½ broiler chicken, ½ beef choma, 2 pilau, 2 vegetables",1660,"Family deals","family"],
+["Savannah Snack Box","Kebab, beef roll, 300ml soda",290,"Snack combos","snack"],
+["Breakfast Delight","Toasted bread portion, black coffee",250,"Snack combos","snack"],
+["Sandwich & White Coffee","Sandwich, white coffee",350,"Snack combos","snack"],
+["Sandwich & Black Coffee","Sandwich, black coffee",300,"Snack combos","snack"],
+["Toast & Roll Snack","Toast with Blue Band, beef roll, 300ml soda",240,"Snack combos","snack"],
+["Pilau Lovers Special","2 pilau, 2 fry meat, 2 vegetables",1160,"Special offers","pilau"],
+["Choma Lovers Offer","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Special offers","choma"],
+["Chicken Weekend Offer","½ broiler chicken, chips, 300ml soda",780,"Special offers","chicken"],
+["Pilau & Beef Choma Special","Pilau, ½ beef choma",750,"Special offers","pilau"],
+["Chips & Fry Meat Special","Chips, fry meat",450,"Special offers","snack"],
+["Mukimo & Goat Choma Special","Mukimo, ½ goat choma",750,"Special offers","choma"],
+["Pilau & Fry Meat Special","Pilau, fry meat",500,"Special offers","pilau"],
+["Chapati & Fry Meat Special","2 chapatis, fry meat",480,"Special offers","chapati"],
+["Kienyeji & Chips Delight","¼ kienyeji chicken, chips",600,"More combos","chicken"],
+["Goat Choma & Pilau","½ goat choma, pilau",750,"More combos","pilau"],
+["Beef Choma & Chapati","½ beef choma, 2 chapatis",650,"More combos","chapati"],
+["Chicken & Pilau Special","½ broiler chicken, pilau",750,"More combos","chicken"],
+["Kienyeji Ugali Special","¼ kienyeji chicken, ugali, vegetables",610,"More combos","chicken"]
 ];
 
-const meals = raw.map((x, i) => ({
-  id: i,
-  name: x[0],
-  description: x[1],
-  price: x[2],
-  category: x[3],
-  photo: photos[x[4]]
-})).sort((a, b) => a.price - b.price);
+const meals=comboData.map((c,i)=>({
+ id:i,name:c[0],description:c[1],price:c[2],category:c[3],photo:photos[c[4]]
+})).sort((a,b)=>a.price-b.price);
 
-let cart = {};
-let category = "All";
-let isClosed = true;
-let deferredPrompt = null;
-let installBannerVisible = false;
+let cart={};
+let activeCategory="All";
+let closed=true;
+let deferredPrompt=null;
 
-function getKenyaTime() {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Africa/Nairobi",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23"
-  }).formatToParts(new Date());
+const money=n=>Number(n).toLocaleString("en-KE");
 
-  const hour = Number(parts.find(p => p.type === "hour").value);
-  const minute = Number(parts.find(p => p.type === "minute").value);
-
-  return hour * 60 + minute;
+function kenyaMinutes(){
+ const parts=new Intl.DateTimeFormat("en-GB",{
+  timeZone:"Africa/Nairobi",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+ }).formatToParts(new Date());
+ const h=Number(parts.find(x=>x.type==="hour").value);
+ const m=Number(parts.find(x=>x.type==="minute").value);
+ return h*60+m;
 }
 
-function formatDuration(minutes) {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return `${h} hours and ${m} minutes`;
+function durationText(n){
+ return `${Math.floor(n/60)}h ${n%60}m`;
 }
 
-function updateHours() {
-  const time = getKenyaTime();
-  const opening = 8 * 60 + 30;
-  const closing = 18 * 60;
+function refreshHours(){
+ const now=kenyaMinutes();
+ const open=510;
+ const close=1080;
+ closed=now<open||now>=close;
 
-  isClosed = time < opening || time >= closing;
+ const status=document.getElementById("hoursMessage");
 
-  const lock = document.getElementById("lock");
-  const message = document.getElementById("hoursMessage");
+ if(closed){
+  const wait=now<open?open-now:(1440-now)+open;
+  status.textContent=`Ordering is closed. Opens in ${durationText(wait)}. The menu is still available to browse.`;
+ }else{
+  status.textContent=`We are OPEN! Closing in ${durationText(close-now)}.`;
+ }
 
-  lock.style.display = isClosed ? "flex" : "none";
+ document.getElementById("sendOrder").disabled=closed;
+ renderMenu();
+ renderCart();
+}
 
-  if (isClosed) {
-    const remaining = time < opening
-      ? opening - time
-      : (24 * 60 - time) + opening;
+function renderFilters(){
+ const categories=["All",...new Set(meals.map(m=>m.category))];
+ document.getElementById("filters").innerHTML=categories.map(c=>
+  `<button type="button" class="${c===activeCategory?"active":""}" data-cat="${c}">${c}</button>`
+ ).join("");
+}
 
-    message.textContent = "Ordering is currently closed.";
+function renderMenu(){
+ const query=document.getElementById("search").value.trim().toLowerCase();
+ const visible=meals.filter(m=>
+  (activeCategory==="All"||m.category===activeCategory)&&
+  (m.name+" "+m.description).toLowerCase().includes(query)
+ );
 
-    document.getElementById("countdown").textContent =
-      `Reopens in ${formatDuration(remaining)}.`;
+ const menu=document.getElementById("menu");
+ menu.innerHTML=visible.length?visible.map(m=>`
+  <article class="item">
+   <img src="${m.photo}" alt="${m.name}" loading="lazy">
+   <div class="details">
+    <h3>${m.name}</h3>
+    <p>${m.description}</p>
+    <div class="price">KSh ${money(m.price)}</div>
+    <button class="add" type="button" data-add="${m.id}" ${closed?"disabled":""}>
+     ${closed?"ORDERING CLOSED":"ADD TO CART"}
+    </button>
+   </div>
+  </article>
+ `).join(""):"<p>No combos found. Try another search.</p>";
+}
 
-  } else {
-    const remaining = closing - time;
+function addToCart(id){
+ if(closed){alert("Ordering is closed. Please order between 8:30 AM and 6:00 PM.");return;}
+ cart[id]=(cart[id]||0)+1;
+ renderCart();
+}
 
-    message.textContent =
-      `We are open! Ordering closes in ${formatDuration(remaining)}.`;
+function changeQty(id,delta){
+ if(closed)return;
+ cart[id]=(cart[id]||0)+delta;
+ if(cart[id]<=0)delete cart[id];
+ renderCart();
+}
+
+function renderCart(){
+ let total=0,count=0;
+ const rows=Object.entries(cart).map(([id,qty])=>{
+  const m=meals.find(x=>x.id===Number(id));
+  if(!m)return "";
+  const subtotal=m.price*qty;
+  total+=subtotal;
+  count+=qty;
+  return `<div style="padding:9px 0;border-bottom:1px solid #eee">
+   <b>${m.name}</b><br>
+   KSh ${money(m.price)} × ${qty} = KSh ${money(subtotal)}
+   <button type="button" data-minus="${id}" ${closed?"disabled":""}>−</button>
+   <button type="button" data-plus="${id}" ${closed?"disabled":""}>+</button>
+  </div>`;
+ }).join("");
+
+ document.getElementById("cartItems").innerHTML=rows||"Your cart is empty.";
+ document.getElementById("total").textContent=money(total);
+ document.getElementById("count").textContent=count;
+}
+
+function placeOrder(){
+ refreshHours();
+ if(closed){alert("Savannah is closed. Ordering hours are 8:30 AM–6:00 PM Kenya time.");return;}
+ if(!Object.keys(cart).length){alert("Please add a combo to your cart first.");return;}
+
+ const name=document.getElementById("customer").value.trim();
+ const loc=document.getElementById("location").value.trim();
+
+ if(!name||!loc){alert("Please enter your name and delivery location.");return;}
+
+ let total=0;
+ const lines=[];
+
+ Object.entries(cart).forEach(([id,qty])=>{
+  const m=meals.find(x=>x.id===Number(id));
+  if(m){
+   const sub=m.price*qty;
+   total+=sub;
+   lines.push(`${m.name} × ${qty}: KSh ${money(sub)}`);
   }
+ });
 
-  document.getElementById("sendOrderButton").disabled = isClosed;
+ const message=`Hello Savannah Fast Food! I would like to place an order:
+
+${lines.join("\n")}
+
+TOTAL: KSh ${money(total)}
+Delivery: FREE
+Name: ${name}
+Delivery location: ${loc}
+Instructions: ${document.getElementById("instructions").value.trim()||"None"}
+
+Please confirm my order. Payment after delivery.`;
+
+ window.location.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 }
 
-function renderFilters() {
-  const cats = ["All", ...new Set(meals.map(m => m.category))];
-
-  document.getElementById("filters").innerHTML = cats.map(c =>
-    `<button class="${category === c ? "active" : ""}"
-    onclick="chooseCategory('${c}')">${c}</button>`
-  ).join("");
+function showInstall(){
+ const banner=document.getElementById("installBanner");
+ banner.style.display="block";
+ banner.scrollIntoView({behavior:"smooth",block:"center"});
 }
 
-function chooseCategory(c) {
-  category = c;
-  renderFilters();
-  renderMenu();
+function dismissInstall(){
+ document.getElementById("installBanner").style.display="none";
 }
 
-function renderMenu() {
-  const q = document.getElementById("search").value.toLowerCase();
-
-  const list = meals.filter(m =>
-    (category === "All" || m.category === category) &&
-    (m.name + " " + m.description).toLowerCase().includes(q)
-  );
-
-  document.getElementById("menu").innerHTML = list.length
-    ? list.map(m => `
-      <article class="item">
-        <img
-          src="${m.photo}"
-          alt="${m.name}"
-          loading="lazy"
-        >
-        <div class="details">
-          <h3>${m.name}</h3>
-          <p>${m.description}</p>
-          <div class="price">KSh ${m.price.toLocaleString("en-KE")}</div>
-          <button class="add"
-            ${isClosed ? "disabled" : ""}
-            onclick="addToCart(${m.id})">
-            ${isClosed ? "ORDERING CLOSED" : "ADD TO CART"}
-          </button>
-        </div>
-      </article>
-    `).join("")
-    : "<p>No combos found. Try another search.</p>";
+async function installApp(){
+ if(deferredPrompt){
+  deferredPrompt.prompt();
+  try{
+   const choice=await deferredPrompt.userChoice;
+   document.getElementById("installHelp").textContent=
+    choice.outcome==="accepted"?"Installation accepted.":"You can install later.";
+  }catch(e){}
+  deferredPrompt=null;
+  dismissInstall();
+ }else{
+  document.getElementById("installHelp").textContent=
+   "On Android Chrome, open the browser menu (⋮) and choose Install app or Add to Home screen if available.";
+ }
 }
 
-function addToCart(id) {
-  if (isClosed) {
-    alert("Savannah is currently closed. Please order during opening hours.");
-    return;
-  }
+function setupInstall(){
+ const standalone=window.matchMedia("(display-mode: standalone)").matches||
+  window.navigator.standalone===true;
+ if(standalone)return;
 
-  cart[id] = (cart[id] || 0) + 1;
-  updateCart();
+ window.addEventListener("beforeinstallprompt",event=>{
+  event.preventDefault();
+  deferredPrompt=event;
+  showInstall();
+ });
+
+ window.addEventListener("appinstalled",()=>{
+  deferredPrompt=null;
+  dismissInstall();
+ });
 }
 
-function changeQty(id, n) {
-  if (isClosed) return;
+function init(){
+ renderFilters();
+ renderMenu();
+ renderCart();
+ refreshHours();
+ setInterval(refreshHours,60000);
+ setupInstall();
 
-  cart[id] = (cart[id] || 0) + n;
-
-  if (cart[id] <= 0) {
-    delete cart[id];
-  }
-
-  updateCart();
+ if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("./service-worker.js")
+   .catch(error=>console.warn("Service worker registration failed:",error));
+ }
 }
 
-function updateCart() {
-  let total = 0;
-  let count = 0;
-  let html = "";
+document.getElementById("search").addEventListener("input",renderMenu);
 
-  for (const id in cart) {
-    const m = meals.find(item => item.id === Number(id));
-    if (!m) continue;
+document.getElementById("filters").addEventListener("click",event=>{
+ const button=event.target.closest("[data-cat]");
+ if(!button)return;
+ activeCategory=button.dataset.cat;
+ renderFilters();
+ renderMenu();
+});
 
-    const qty = cart[id];
-    const sub = m.price * qty;
+document.getElementById("menu").addEventListener("click",event=>{
+ const button=event.target.closest("[data-add]");
+ if(button)addToCart(Number(button.dataset.add));
+});
 
-    total += sub;
-    count += qty;
+document.getElementById("cartItems").addEventListener("click",event=>{
+ const minus=event.target.closest("[data-minus]");
+ const plus=event.target.closest("[data-plus]");
+ if(minus)changeQty(Number(minus.dataset.minus),-1);
+ if(plus)changeQty(Number(plus.dataset.plus),1);
+});
 
-    html += `
-      <div style="padding:9px 0;border-bottom:1px solid #eee">
-        <b>${m.name}</b><br>
-        KSh ${m.price} × ${qty} = KSh ${sub}
-        <button onclick="changeQty(${id},-1)">−</button>
-        <button onclick="changeQty(${id},1)">+</button>
-      </div>
-    `;
-  }
+document.getElementById("sendOrder").addEventListener("click",placeOrder);
+document.getElementById("viewCart").addEventListener("click",()=>{
+ document.getElementById("order").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("showInstall").addEventListener("click",showInstall);
+document.getElementById("footerInstall").addEventListener("click",showInstall);
+document.getElementById("installNow").addEventListener("click",installApp);
+document.getElementById("installLater").addEventListener("click",dismissInstall);
 
-  document.getElementById("cartItems").innerHTML =
-    html || "Your cart is empty.";
-
-  document.getElementById("total").textContent =
-    total.toLocaleString("en-KE");
-
-  document.getElementById("count").textContent = count;
+if(document.readyState==="loading"){
+ document.addEventListener("DOMContentLoaded",init,{once:true});
+}else{
+ init();
 }
-
-function sendOrder() {
-  updateHours();
-
-  if (isClosed) {
-    alert("Savannah is closed. Please order between 8:30 AM and 6:00 PM.");
-    return;
-  }
-
-  const customer = document.getElementById("customer").value.trim();
-  const location = document.getElementById("location").value.trim();
-
-  if (!Object.keys(cart).length) {
-    alert("Please add a combo to your cart.");
-    return;
-  }
-
-  if (!customer || !location) {
-    alert("Please enter your name and delivery location.");
-    return;
-  }
-
-  let total = 0;
-  const lines = [];
-
-  for (const id in cart) {
-    const m = meals.find(item => item.id === Number(id));
-    if (!m) continue;
-
-    const sub = m.price * cart[id];
-    total += sub;
-
-    lines.push(`${m.name} x ${cart[id]} = KSh ${sub}`);
-  }
-
-  const instructions =
-    document.getElementById("instructions").value.trim();
-
-  const message =
-    `Hello Savannah Fast Food! I would like to place an order:\n\n` +
-    `${lines.join("\n")}\n\n` +
-    `TOTAL: KSh ${total}\n` +
-    `Name: ${customer}\n` +
-    `Delivery location: ${location}\n` +
-    `Instructions: ${instructions || "None"}\n\n` +
-    `Please confirm my order. Payment after delivery.`;
-
-  const url =
-    "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
-
-  window.open(url, "_blank");
-}
-
-function showInstall() {
-  const banner = document.getElementById("installBanner");
-  banner.style.display = "block";
-  installBannerVisible = true;
-
-  banner.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-function dismissInstall() {
-  document.getElementById("installBanner").style.display = "none";
-  installBannerVisible = false;
-}
-
-async function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-
-    const choice = await deferredPrompt.userChoice;
-
-    if (choice && choice.outcome === "accepted") {
-      document.getElementById("installHelp").textContent =
-        "Savannah installation accepted!";
-    }
-
-    deferredPrompt = null;
-    dismissInstall();
-    return;
-  }
-
-  document.getElementById("installHelp").textContent =
-    "If installation is available, open your browser menu and choose " +
-    "'Install app' or 'Add to Home screen'.";
-}
-
-function setupInstallation() {
-  const standalone =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true;
-
-  if (standalone) {
-    dismissInstall();
-    return;
-  }
-
-  window.addEventListener("beforeinstallprompt", event => {
-    event.preventDefault();
-    deferredPrompt = event;
-    showInstall();
-  });
-
-  window.addEventListener("appinstalled", () => {
-    deferredPrompt = null;
-    dismissInstall();
-    document.getElementById("installHelp").textContent =
-      "Savannah has been installed successfully!";
-  });
-
-  // Show an invitation even if the browser requires manual installation.
-  setTimeout(() => {
-    if (!standalone && !installBannerVisible) {
-      showInstall();
-    }
-  }, 1800);
-}
-
-async function registerServiceWorker() {
-  if (!("serviceWorker" in navigator)) {
-    console.warn("This browser does not support service workers.");
-    return;
-  }
-
-  try {
-    await navigator.se
+</script>
+</body>
+  </html>
+  
