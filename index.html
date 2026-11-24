@@ -110,6 +110,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <label for="customer">Your name</label>
   <input id="customer" autocomplete="name" placeholder="Enter your name">
 
+  <label for="customerPhone">Your phone number</label>
+  <input id="customerPhone" type="tel" autocomplete="tel"
+   inputmode="tel" placeholder="e.g. 07XXXXXXXX">
+
   <label for="location">Delivery location</label>
   <input id="location" placeholder="Where should we deliver?">
 
@@ -118,6 +122,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
   <button class="order" id="sendOrder">SEND ORDER THROUGH WHATSAPP</button>
   <p style="font-size:12px">You can share your live location directly through WhatsApp. Payment is after delivery.</p>
+  <p id="orderStatus" role="status" aria-live="polite" style="font-size:13px"></p>
  </section>
 </main>
 
@@ -134,15 +139,31 @@ button:disabled{opacity:.5;cursor:not-allowed}
  <button id="footerInstall">INSTALL SAVANNAH APP</button>
 </footer>
 
+<!-- Supabase library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 "use strict";
 
+/* SAVANNAH SUPABASE CONNECTION */
+const SUPABASE_URL="https://qgdlmpzgkcsldjufprhb.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_v5BAHGeX9a-7k4slxRVyMQ_FyjVnfdx";
 const PHONE="254799378702";
 
-/* Photos are illustrative.
-   Each meal is assigned a relevant food type photo.
-   No sandwich photo is assigned to chapati meals.
-*/
+let supabaseClient=null;
+
+try{
+ if(window.supabase && window.supabase.createClient){
+  supabaseClient=window.supabase.createClient(
+   SUPABASE_URL,
+   SUPABASE_PUBLISHABLE_KEY
+  );
+ }
+}catch(error){
+ console.error("Supabase initialization failed:",error);
+}
+
+/* Photos are illustrative */
 const photos={
  chicken:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80",
  choma:"https://travelfoodatlas.com/wp-content/uploads/2023/12/Nyama-Choma-Served.jpg",
@@ -260,6 +281,7 @@ let cart={};
 let activeCategory="All";
 let closed=true;
 let deferredPrompt=null;
+let orderInProgress=false;
 
 const money=n=>Number(n).toLocaleString("en-KE");
 
@@ -296,7 +318,7 @@ function refreshHours(){
   status.textContent=`We are OPEN! Closing in ${durationText(close-now)}.`;
  }
 
- document.getElementById("sendOrder").disabled=closed;
+ document.getElementById("sendOrder").disabled=closed||orderInProgress;
  renderMenu();
  renderCart();
 }
@@ -378,7 +400,33 @@ function renderCart(){
  document.getElementById("count").textContent=count;
 }
 
-function placeOrder(){
+/* Convert Kenyan phone formats into 254 format */
+function normalizeKenyanPhone(value){
+ let phone=value.replace(/[\s\-()]/g,"");
+
+ if(phone.startsWith("+"))phone=phone.substring(1);
+
+ if(/^0[17]\d{8}$/.test(phone)){
+  phone="254"+phone.substring(1);
+ }else if(/^[17]\d{8}$/.test(phone)){
+  phone="254"+phone;
+ }
+
+ if(!/^254[17]\d{8}$/.test(phone)){
+  return null;
+ }
+
+ return phone;
+}
+
+function setOrderStatus(message,isError=false){
+ const status=document.getElementById("orderStatus");
+ status.textContent=message;
+ status.style.color=isError?"#b00020":"#173b2b";
+}
+
+/* SAVE ORDER FIRST, THEN OPEN WHATSAPP */
+async function placeOrder(){
  refreshHours();
 
  if(closed){
@@ -386,149 +434,113 @@ function placeOrder(){
   return;
  }
 
+ if(orderInProgress)return;
+
  if(!Object.keys(cart).length){
   alert("Please add a combo to your cart first.");
   return;
  }
 
  const name=document.getElementById("customer").value.trim();
+ const rawPhone=document.getElementById("customerPhone").value.trim();
+ const customerPhone=normalizeKenyanPhone(rawPhone);
  const loc=document.getElementById("location").value.trim();
+ const instructions=document.getElementById("instructions").value.trim();
 
- if(!name||!loc){
-  alert("Please enter your name and delivery location.");
+ if(!name||!rawPhone||!loc){
+  alert("Please enter your name, phone number and delivery location.");
+  return;
+ }
+
+ if(!customerPhone){
+  alert("Please enter a valid Kenyan phone number, for example 0712345678 or 254712345678.");
+  return;
+ }
+
+ if(!supabaseClient){
+  setOrderStatus("Connection problem: Savannah could not connect to the order system. Please try again.",true);
+  alert("The order system is not available right now. Please try again later.");
   return;
  }
 
  let total=0;
  const lines=[];
+ const items=[];
 
  Object.entries(cart).forEach(([id,qty])=>{
   const m=meals.find(x=>x.id===Number(id));
 
   if(m){
-   const sub=m.price*qty;
-   total+=sub;
-   lines.push(`${m.name} × ${qty}: KSh ${money(sub)}`);
+   const subtotal=m.price*qty;
+   total+=subtotal;
+
+   lines.push(`${m.name} × ${qty}: KSh ${money(subtotal)}`);
+
+   items.push({
+    combo_name:m.name,
+    quantity:qty,
+    unit_price_kes:m.price
+   });
   }
  });
 
- const message=`Hello Savannah Fast Food! I would like to place an order:
+ if(!items.length||!Number.isSafeInteger(total)){
+  alert("There is a problem with your cart. Please refresh and try again.");
+  return;
+ }
+
+ const button=document.getElementById("sendOrder");
+ orderInProgress=true;
+ button.disabled=true;
+ button.textContent="SAVING YOUR ORDER...";
+ setOrderStatus("Saving your order securely. Please wait...");
+
+ try{
+  const {data,error}=await supabaseClient.rpc(
+   "submit_savannah_order",
+   {
+    p_customer_name:name,
+    p_customer_phone:customerPhone,
+    p_delivery_location:loc,
+    p_instructions:instructions,
+    p_total_kes:total,
+    p_items:items
+   }
+  );
+
+  if(error){
+   console.error("Supabase order error:",error);
+   throw error;
+  }
+
+  if(!data){
+   throw new Error("The database did not return an order reference.");
+  }
+
+  const orderReference=data;
+
+  const message=`Hello Savannah Fast Food! I have submitted an order.
+
+ORDER REFERENCE: ${orderReference}
 
 ${lines.join("\n")}
 
 TOTAL: KSh ${money(total)}
 Delivery: FREE
 Name: ${name}
+Phone: ${rawPhone}
 Delivery location: ${loc}
-Instructions: ${document.getElementById("instructions").value.trim()||"None"}
+Instructions: ${instructions||"None"}
 
-Please confirm my order. Payment after delivery.`;
+My order has been saved. Please confirm it with me. Payment after delivery.`;
 
- window.location.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
-}
+  setOrderStatus("Order saved successfully! Opening WhatsApp...");
 
-function showInstall(){
- const banner=document.getElementById("installBanner");
- banner.style.display="block";
- banner.scrollIntoView({behavior:"smooth",block:"center"});
-}
+  const whatsappURL=`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 
-function dismissInstall(){
- document.getElementById("installBanner").style.display="none";
-}
+  window.location.href=whatsappURL;
 
-async function installApp(){
- if(deferredPrompt){
-  deferredPrompt.prompt();
+ }catch(error){
+  console.error("Order submission failed:",error);
 
-  try{
-   const choice=await deferredPrompt.userChoice;
-   document.getElementById("installHelp").textContent=
-    choice.outcome==="accepted"?"Installation accepted.":"You can install later.";
-  }catch(e){}
-
-  deferredPrompt=null;
-  dismissInstall();
- }else{
-  document.getElementById("installHelp").textContent=
-   "On Android Chrome, open the browser menu (⋮) and choose Install app or Add to Home screen if available.";
- }
-}
-
-function setupInstall(){
- const standalone=window.matchMedia("(display-mode: standalone)").matches||
-  window.navigator.standalone===true;
-
- if(standalone)return;
-
- window.addEventListener("beforeinstallprompt",event=>{
-  event.preventDefault();
-  deferredPrompt=event;
-  /* Installation stays optional.
-     The customer must tap INSTALL APP to see the install instructions. */
- });
-
- window.addEventListener("appinstalled",()=>{
-  deferredPrompt=null;
-  dismissInstall();
- });
-}
-
-function init(){
- renderFilters();
- renderMenu();
- renderCart();
- refreshHours();
- setInterval(refreshHours,60000);
- setupInstall();
-
- if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./service-worker.js")
-   .catch(error=>console.warn("Service worker registration failed:",error));
- }
-}
-
-document.getElementById("search").addEventListener("input",renderMenu);
-
-document.getElementById("filters").addEventListener("click",event=>{
- const button=event.target.closest("[data-cat]");
- if(!button)return;
-
- activeCategory=button.dataset.cat;
- renderFilters();
- renderMenu();
-});
-
-document.getElementById("menu").addEventListener("click",event=>{
- const button=event.target.closest("[data-add]");
- if(button)addToCart(Number(button.dataset.add));
-});
-
-document.getElementById("cartItems").addEventListener("click",event=>{
- const minus=event.target.closest("[data-minus]");
- const plus=event.target.closest("[data-plus]");
-
- if(minus)changeQty(Number(minus.dataset.minus),-1);
- if(plus)changeQty(Number(plus.dataset.plus),1);
-});
-
-document.getElementById("sendOrder").addEventListener("click",placeOrder);
-
-document.getElementById("viewCart").addEventListener("click",()=>{
- document.getElementById("order").scrollIntoView({behavior:"smooth"});
-});
-
-document.getElementById("showInstall").addEventListener("click",showInstall);
-document.getElementById("footerInstall").addEventListener("click",showInstall);
-document.getElementById("installNow").addEventListener("click",installApp);
-document.getElementById("installLater").addEventListener("click",dismissInstall);
-
-if(document.readyState==="loading"){
- document.addEventListener("DOMContentLoaded",init,{once:true});
-}else{
- init();
-}
-</script>
-</body>
- </html>
- 
+  setOrderSta
