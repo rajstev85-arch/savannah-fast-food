@@ -8,6 +8,7 @@
 <meta name="description" content="Savannah Fast Food, Nyahururu. Delicious meal combos, free delivery and easy WhatsApp ordering.">
 <title>Savannah Fast Food | Nyahururu</title>
 <link rel="manifest" href="./manifest.json">
+
 <style>
 :root{--green:#173b2b;--dark:#10291e;--orange:#f39a24;--cream:#fff8eb}
 *{box-sizing:border-box}
@@ -30,6 +31,7 @@ main{max-width:1000px;margin:auto;padding:14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .item{background:white;border-radius:13px;overflow:hidden;box-shadow:0 2px 8px #0001}
 .item img{width:100%;height:145px;object-fit:cover;background:#eee}
+.photo-note{padding:0 12px;color:#777;font-size:10px}
 .details{padding:12px}
 .item h3{margin:0 0 7px;color:var(--green);font-size:17px}
 .item p{font-size:13px;color:#667067;min-height:32px}
@@ -53,16 +55,16 @@ footer button{background:var(--orange);border:0;border-radius:8px;padding:11px 1
 button{cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
 @media(max-width:520px){
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.item img{height:110px}.details{padding:9px}
-.item h3{font-size:14px}.item p{font-size:12px}
-.price{font-size:16px}.actions{gap:6px}
-.actions a,.actions button{font-size:11px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .item img{height:110px}.details{padding:9px}
+ .item h3{font-size:14px}.item p{font-size:12px}
+ .price{font-size:16px}.actions{gap:6px}
+ .actions a,.actions button{font-size:11px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
  <div class="logo">SAVANNAH FAST FOOD</div>
  <p>Good food. Easy ordering. Delivered to you.</p>
@@ -137,66 +139,121 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 const PHONE="254799378702";
 
+/* Photos are illustrative.
+   Each meal is assigned a relevant food type photo.
+   No sandwich photo is assigned to chapati meals.
+*/
 const photos={
  chicken:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80",
- choma:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
- pilau:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
- snack:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
- chapati:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80",
+ choma:"https://travelfoodatlas.com/wp-content/uploads/2023/12/Nyama-Choma-Served.jpg",
+ pilau:"https://savannaplate.co.ke/assets/swahili-pilau-opt2-D5VpnCnS.webp",
+ chapati:"https://judywanderi.net/wp-content/uploads/2021/03/20210224-IMG_7823-585x585.jpg",
+ fries:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
+ snacks:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
+ sandwich:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80",
+ toast:"https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=900&q=80",
  family:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80"
 };
 
-/* 42 Savannah combos.
-   Prices use the individual selling prices supplied by the owner.
-   Delivery is free to customers and is included in the profit check.
-*/
+/* 42 Savannah combos */
 const comboData=[
-["Savannah Chicken Feast","½ broiler chicken, chips, 300ml soda",780,"Chicken lovers","chicken"],
-["Kienyeji Traditional Feast","¼ kienyeji chicken, mukimo, vegetables",730,"Chicken lovers","chicken"],
-["Chicken & Ugali Delight","½ broiler chicken, ugali, vegetables",710,"Chicken lovers","chicken"],
-["Chicken Pilau Feast","½ broiler chicken, pilau",750,"Chicken lovers","pilau"],
-["Chicken Chips & Soda","½ broiler chicken, chips, 700ml soda",800,"Chicken lovers","chicken"],
-["Beef Choma Feast","½ beef choma, ugali, vegetables",710,"Choma lovers","choma"],
-["Goat Choma Feast","½ goat choma, ugali, vegetables",710,"Choma lovers","choma"],
-["Mukimo Choma Special","Mukimo, ½ beef choma, vegetables",830,"Choma lovers","choma"],
-["Pilau & Beef Choma","Pilau, ½ beef choma",750,"Choma lovers","pilau"],
-["Goat Choma & Chips","½ goat choma, chips",700,"Choma lovers","choma"],
-["Pilau Meat Delight","Pilau, fry meat, vegetables",580,"Kenyan favourites","pilau"],
-["Chapati Meat Treat","2 chapatis, fry meat, vegetables",480,"Kenyan favourites","chapati"],
-["Mukimo & Fry Meat","Mukimo, fry meat",500,"Kenyan favourites","choma"],
-["Ugali Fry Meat Special","Ugali, fry meat, vegetables",460,"Kenyan favourites","choma"],
-["Chips & Fry Meat","Chips, fry meat",450,"Kenyan favourites","snack"],
-["Double Pilau Meat Feast","2 pilau, 2 fry meat, 2 vegetables",1160,"Double meals","pilau"],
-["Double Choma Special","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Double meals","choma"],
-["Double Chicken Delight","2 × ½ broiler chicken, 2 chips, 2 × 300ml soda",1560,"Double meals","chicken"],
-["Double Kienyeji Feast","2 × ¼ kienyeji chicken, 2 ugali, 2 vegetables",1220,"Double meals","chicken"],
-["Couples Pilau & Chicken","½ broiler chicken, 2 pilau",950,"Couples deals","pilau"],
-["Couples Choma Mix","½ beef choma, ½ goat choma, 2 ugali",1260,"Couples deals","choma"],
-["Couples Chips & Meat","2 chips, fry meat, 2 × 300ml soda",760,"Couples deals","snack"],
-["Family Chicken Feast","2 × ½ broiler chicken, 4 chips, 2 × 700ml soda",1900,"Family deals","family"],
-["Family Mixed Feast","½ broiler chicken, ½ beef choma, 2 pilau, 2 vegetables",1660,"Family deals","family"],
-["Savannah Snack Box","Kebab, beef roll, 300ml soda",290,"Snack combos","snack"],
-["Breakfast Delight","Toasted bread portion, black coffee",250,"Snack combos","snack"],
-["Sandwich & White Coffee","Sandwich, white coffee",350,"Snack combos","snack"],
-["Sandwich & Black Coffee","Sandwich, black coffee",300,"Snack combos","snack"],
-["Toast & Roll Snack","Toast with Blue Band, beef roll, 300ml soda",240,"Snack combos","snack"],
-["Pilau Lovers Special","2 pilau, 2 fry meat, 2 vegetables",1160,"Special offers","pilau"],
-["Choma Lovers Offer","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Special offers","choma"],
-["Chicken Weekend Offer","½ broiler chicken, chips, 300ml soda",780,"Special offers","chicken"],
-["Pilau & Beef Choma Special","Pilau, ½ beef choma",750,"Special offers","pilau"],
-["Chips & Fry Meat Special","Chips, fry meat",450,"Special offers","snack"],
-["Mukimo & Goat Choma Special","Mukimo, ½ goat choma",750,"Special offers","choma"],
-["Pilau & Fry Meat Special","Pilau, fry meat",500,"Special offers","pilau"],
-["Chapati & Fry Meat Special","2 chapatis, fry meat",480,"Special offers","chapati"],
-["Kienyeji & Chips Delight","¼ kienyeji chicken, chips",600,"More combos","chicken"],
-["Goat Choma & Pilau","½ goat choma, pilau",750,"More combos","pilau"],
-["Beef Choma & Chapati","½ beef choma, 2 chapatis",650,"More combos","chapati"],
-["Chicken & Pilau Special","½ broiler chicken, pilau",750,"More combos","chicken"],
-["Kienyeji Ugali Special","¼ kienyeji chicken, ugali, vegetables",610,"More combos","chicken"]
+["Savannah Chicken Feast","½ broiler chicken, chips, 300ml soda",780,"Chicken lovers"],
+["Kienyeji Traditional Feast","¼ kienyeji chicken, mukimo, vegetables",730,"Chicken lovers"],
+["Chicken & Ugali Delight","½ broiler chicken, ugali, vegetables",710,"Chicken lovers"],
+["Chicken Pilau Feast","½ broiler chicken, pilau",750,"Chicken lovers"],
+["Chicken Chips & Soda","½ broiler chicken, chips, 700ml soda",800,"Chicken lovers"],
+["Beef Choma Feast","½ beef choma, ugali, vegetables",710,"Choma lovers"],
+["Goat Choma Feast","½ goat choma, ugali, vegetables",710,"Choma lovers"],
+["Mukimo Choma Special","Mukimo, ½ beef choma, vegetables",830,"Choma lovers"],
+["Pilau & Beef Choma","Pilau, ½ beef choma",750,"Choma lovers"],
+["Goat Choma & Chips","½ goat choma, chips",700,"Choma lovers"],
+["Pilau Meat Delight","Pilau, fry meat, vegetables",580,"Kenyan favourites"],
+["Chapati Meat Treat","2 chapatis, fry meat, vegetables",480,"Kenyan favourites"],
+["Mukimo & Fry Meat","Mukimo, fry meat",500,"Kenyan favourites"],
+["Ugali Fry Meat Special","Ugali, fry meat, vegetables",460,"Kenyan favourites"],
+["Chips & Fry Meat","Chips, fry meat",450,"Kenyan favourites"],
+["Double Pilau Meat Feast","2 pilau, 2 fry meat, 2 vegetables",1160,"Double meals"],
+["Double Choma Special","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Double meals"],
+["Double Chicken Delight","2 × ½ broiler chicken, 2 chips, 2 × 300ml soda",1560,"Double meals"],
+["Double Kienyeji Feast","2 × ¼ kienyeji chicken, 2 ugali, 2 vegetables",1220,"Double meals"],
+["Couples Pilau & Chicken","½ broiler chicken, 2 pilau",950,"Couples deals"],
+["Couples Choma Mix","½ beef choma, ½ goat choma, 2 ugali",1260,"Couples deals"],
+["Couples Chips & Meat","2 chips, fry meat, 2 × 300ml soda",760,"Couples deals"],
+["Family Chicken Feast","2 × ½ broiler chicken, 4 chips, 2 × 700ml soda",1900,"Family deals"],
+["Family Mixed Feast","½ broiler chicken, ½ beef choma, 2 pilau, 2 vegetables",1660,"Family deals"],
+["Savannah Snack Box","Kebab, beef roll, 300ml soda",290,"Snack combos"],
+["Breakfast Delight","Toasted bread portion, black coffee",250,"Snack combos"],
+["Sandwich & White Coffee","Sandwich, white coffee",350,"Snack combos"],
+["Sandwich & Black Coffee","Sandwich, black coffee",300,"Snack combos"],
+["Toast & Roll Snack","Toast with Blue Band, beef roll, 300ml soda",240,"Snack combos"],
+["Pilau Lovers Special","2 pilau, 2 fry meat, 2 vegetables",1160,"Special offers"],
+["Choma Lovers Offer","2 mukimo, 2 × ½ beef choma, 2 vegetables",1660,"Special offers"],
+["Chicken Weekend Offer","½ broiler chicken, chips, 300ml soda",780,"Special offers"],
+["Pilau & Beef Choma Special","Pilau, ½ beef choma",750,"Special offers"],
+["Chips & Fry Meat Special","Chips, fry meat",450,"Special offers"],
+["Mukimo & Goat Choma Special","Mukimo, ½ goat choma",750,"Special offers"],
+["Pilau & Fry Meat Special","Pilau, fry meat",500,"Special offers"],
+["Chapati & Fry Meat Special","2 chapatis, fry meat",400,"Special offers"],
+["Kienyeji & Chips Delight","¼ kienyeji chicken, chips",600,"More combos"],
+["Goat Choma & Pilau","½ goat choma, pilau",750,"More combos"],
+["Beef Choma & Chapati","½ beef choma, 2 chapatis",650,"More combos"],
+["Chicken & Pilau Special","½ broiler chicken, pilau",750,"More combos"],
+["Kienyeji Ugali Special","¼ kienyeji chicken, ugali, vegetables",610,"More combos"]
 ];
 
+/* Explicit photo assignment by combo name */
+const photoForCombo={
+ "Savannah Chicken Feast":"chicken",
+ "Kienyeji Traditional Feast":"chicken",
+ "Chicken & Ugali Delight":"chicken",
+ "Chicken Pilau Feast":"pilau",
+ "Chicken Chips & Soda":"chicken",
+ "Beef Choma Feast":"choma",
+ "Goat Choma Feast":"choma",
+ "Mukimo Choma Special":"choma",
+ "Pilau & Beef Choma":"pilau",
+ "Goat Choma & Chips":"choma",
+ "Pilau Meat Delight":"pilau",
+ "Chapati Meat Treat":"chapati",
+ "Mukimo & Fry Meat":"choma",
+ "Ugali Fry Meat Special":"choma",
+ "Chips & Fry Meat":"fries",
+ "Double Pilau Meat Feast":"pilau",
+ "Double Choma Special":"choma",
+ "Double Chicken Delight":"chicken",
+ "Double Kienyeji Feast":"chicken",
+ "Couples Pilau & Chicken":"pilau",
+ "Couples Choma Mix":"choma",
+ "Couples Chips & Meat":"fries",
+ "Family Chicken Feast":"family",
+ "Family Mixed Feast":"family",
+ "Savannah Snack Box":"snacks",
+ "Breakfast Delight":"toast",
+ "Sandwich & White Coffee":"sandwich",
+ "Sandwich & Black Coffee":"sandwich",
+ "Toast & Roll Snack":"toast",
+ "Pilau Lovers Special":"pilau",
+ "Choma Lovers Offer":"choma",
+ "Chicken Weekend Offer":"chicken",
+ "Pilau & Beef Choma Special":"pilau",
+ "Chips & Fry Meat Special":"fries",
+ "Mukimo & Goat Choma Special":"choma",
+ "Pilau & Fry Meat Special":"pilau",
+ "Chapati & Fry Meat Special":"chapati",
+ "Kienyeji & Chips Delight":"chicken",
+ "Goat Choma & Pilau":"pilau",
+ "Beef Choma & Chapati":"choma",
+ "Chicken & Pilau Special":"pilau",
+ "Kienyeji Ugali Special":"chicken"
+};
+
 const meals=comboData.map((c,i)=>({
- id:i,name:c[0],description:c[1],price:c[2],category:c[3],photo:photos[c[4]]
+ id:i,
+ name:c[0],
+ description:c[1],
+ price:c[2],
+ category:c[3],
+ photo:photos[photoForCombo[c[0]]]||photos.family
 })).sort((a,b)=>a.price-b.price);
 
 let cart={};
@@ -208,8 +265,12 @@ const money=n=>Number(n).toLocaleString("en-KE");
 
 function kenyaMinutes(){
  const parts=new Intl.DateTimeFormat("en-GB",{
-  timeZone:"Africa/Nairobi",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+  timeZone:"Africa/Nairobi",
+  hour:"2-digit",
+  minute:"2-digit",
+  hourCycle:"h23"
  }).formatToParts(new Date());
+
  const h=Number(parts.find(x=>x.type==="hour").value);
  const m=Number(parts.find(x=>x.type==="minute").value);
  return h*60+m;
@@ -223,6 +284,7 @@ function refreshHours(){
  const now=kenyaMinutes();
  const open=510;
  const close=1080;
+
  closed=now<open||now>=close;
 
  const status=document.getElementById("hoursMessage");
@@ -241,6 +303,7 @@ function refreshHours(){
 
 function renderFilters(){
  const categories=["All",...new Set(meals.map(m=>m.category))];
+
  document.getElementById("filters").innerHTML=categories.map(c=>
   `<button type="button" class="${c===activeCategory?"active":""}" data-cat="${c}">${c}</button>`
  ).join("");
@@ -248,15 +311,18 @@ function renderFilters(){
 
 function renderMenu(){
  const query=document.getElementById("search").value.trim().toLowerCase();
+
  const visible=meals.filter(m=>
   (activeCategory==="All"||m.category===activeCategory)&&
   (m.name+" "+m.description).toLowerCase().includes(query)
  );
 
  const menu=document.getElementById("menu");
+
  menu.innerHTML=visible.length?visible.map(m=>`
   <article class="item">
-   <img src="${m.photo}" alt="${m.name}" loading="lazy">
+   <img src="${m.photo}" alt="${m.name} illustrative food photo" loading="lazy">
+   <div class="photo-note">Photo for illustration</div>
    <div class="details">
     <h3>${m.name}</h3>
     <p>${m.description}</p>
@@ -270,26 +336,35 @@ function renderMenu(){
 }
 
 function addToCart(id){
- if(closed){alert("Ordering is closed. Please order between 8:30 AM and 6:00 PM.");return;}
+ if(closed){
+  alert("Ordering is closed. Please order between 8:30 AM and 6:00 PM.");
+  return;
+ }
+
  cart[id]=(cart[id]||0)+1;
  renderCart();
 }
 
 function changeQty(id,delta){
  if(closed)return;
+
  cart[id]=(cart[id]||0)+delta;
  if(cart[id]<=0)delete cart[id];
+
  renderCart();
 }
 
 function renderCart(){
  let total=0,count=0;
+
  const rows=Object.entries(cart).map(([id,qty])=>{
   const m=meals.find(x=>x.id===Number(id));
   if(!m)return "";
+
   const subtotal=m.price*qty;
   total+=subtotal;
   count+=qty;
+
   return `<div style="padding:9px 0;border-bottom:1px solid #eee">
    <b>${m.name}</b><br>
    KSh ${money(m.price)} × ${qty} = KSh ${money(subtotal)}
@@ -305,19 +380,31 @@ function renderCart(){
 
 function placeOrder(){
  refreshHours();
- if(closed){alert("Savannah is closed. Ordering hours are 8:30 AM–6:00 PM Kenya time.");return;}
- if(!Object.keys(cart).length){alert("Please add a combo to your cart first.");return;}
+
+ if(closed){
+  alert("Savannah is closed. Ordering hours are 8:30 AM–6:00 PM Kenya time.");
+  return;
+ }
+
+ if(!Object.keys(cart).length){
+  alert("Please add a combo to your cart first.");
+  return;
+ }
 
  const name=document.getElementById("customer").value.trim();
  const loc=document.getElementById("location").value.trim();
 
- if(!name||!loc){alert("Please enter your name and delivery location.");return;}
+ if(!name||!loc){
+  alert("Please enter your name and delivery location.");
+  return;
+ }
 
  let total=0;
  const lines=[];
 
  Object.entries(cart).forEach(([id,qty])=>{
   const m=meals.find(x=>x.id===Number(id));
+
   if(m){
    const sub=m.price*qty;
    total+=sub;
@@ -353,11 +440,13 @@ function dismissInstall(){
 async function installApp(){
  if(deferredPrompt){
   deferredPrompt.prompt();
+
   try{
    const choice=await deferredPrompt.userChoice;
    document.getElementById("installHelp").textContent=
     choice.outcome==="accepted"?"Installation accepted.":"You can install later.";
   }catch(e){}
+
   deferredPrompt=null;
   dismissInstall();
  }else{
@@ -369,12 +458,14 @@ async function installApp(){
 function setupInstall(){
  const standalone=window.matchMedia("(display-mode: standalone)").matches||
   window.navigator.standalone===true;
+
  if(standalone)return;
 
  window.addEventListener("beforeinstallprompt",event=>{
   event.preventDefault();
   deferredPrompt=event;
-  showInstall();
+  /* Installation stays optional.
+     The customer must tap INSTALL APP to see the install instructions. */
  });
 
  window.addEventListener("appinstalled",()=>{
@@ -402,6 +493,7 @@ document.getElementById("search").addEventListener("input",renderMenu);
 document.getElementById("filters").addEventListener("click",event=>{
  const button=event.target.closest("[data-cat]");
  if(!button)return;
+
  activeCategory=button.dataset.cat;
  renderFilters();
  renderMenu();
@@ -415,14 +507,17 @@ document.getElementById("menu").addEventListener("click",event=>{
 document.getElementById("cartItems").addEventListener("click",event=>{
  const minus=event.target.closest("[data-minus]");
  const plus=event.target.closest("[data-plus]");
+
  if(minus)changeQty(Number(minus.dataset.minus),-1);
  if(plus)changeQty(Number(plus.dataset.plus),1);
 });
 
 document.getElementById("sendOrder").addEventListener("click",placeOrder);
+
 document.getElementById("viewCart").addEventListener("click",()=>{
  document.getElementById("order").scrollIntoView({behavior:"smooth"});
 });
+
 document.getElementById("showInstall").addEventListener("click",showInstall);
 document.getElementById("footerInstall").addEventListener("click",showInstall);
 document.getElementById("installNow").addEventListener("click",installApp);
@@ -435,5 +530,5 @@ if(document.readyState==="loading"){
 }
 </script>
 </body>
-  </html>
-  
+ </html>
+ 
