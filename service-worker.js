@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "savannah-fast-food-v6";
+const CACHE_NAME = "savannah-fast-food-v7";
 
 const APP_SHELL = [
   "./",
