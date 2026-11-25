@@ -5,8 +5,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#101820",
-  "theme_color": "#f28c28",
+  "background_color": "#fff8eb",
+  "theme_color": "#173b2b",
   "description": "Order delicious meal combos from Savannah Fast Food in Nyahururu, Kenya.",
   "icons": [
     {
