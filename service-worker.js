@@ -1,9 +1,10 @@
 
-const CACHE_NAME = "savannah-fast-food-v2";
+const CACHE_NAME = "savannah-fast-food-v3";
 
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./staff.html",
   "./manifest.json",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg"
