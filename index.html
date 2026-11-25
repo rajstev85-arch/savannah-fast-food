@@ -18,6 +18,7 @@
 const SUPABASE_URL="https://qgdlmpzgkcsldjufprhb.supabase.co",SUPABASE_KEY="sb_publishable_v5BAHGeX9a-7k4slxRVyMQ_FyjVnfdx",PHONE="254799378702";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const photos={
+sandwichWhiteCoffee:["https://axilcoffee.com.au/cdn/shop/files/23_a4f22d06-d00a-48a1-b7b4-cf390a0267e0_1000x.png?v=1698637088","https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80"],
 chicken:["https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=900&q=80"],
 choma:["https://travelfoodatlas.com/wp-content/uploads/2023/12/Nyama-Choma-Served.jpg","https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80"],
 pilau:["https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80"],
@@ -29,7 +30,7 @@ toast:["https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format
 family:["https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"]
 };
 
-const photoKey=c=>/chicken|kienyeji/i.test(c.combo_name)?"chicken":/choma/i.test(c.combo_name)?"choma":/pilau|mukimo/i.test(c.combo_name)?"pilau":/chapati/i.test(c.combo_name)?"chapati":/chips/i.test(c.combo_name)?"fries":/sandwich/i.test(c.combo_name)?"sandwich":/toast|breakfast/i.test(c.combo_name)?"toast":/snack|roll/i.test(c.combo_name)?"snacks":"family";
+const photoKey=c=>/sandwich.*white coffee|white coffee.*sandwich/i.test(c.combo_name)?"sandwichWhiteCoffee":/chicken|kienyeji/i.test(c.combo_name)?"chicken":/choma/i.test(c.combo_name)?"choma":/pilau|mukimo/i.test(c.combo_name)?"pilau":/chapati/i.test(c.combo_name)?"chapati":/chips/i.test(c.combo_name)?"fries":/sandwich/i.test(c.combo_name)?"sandwich":/toast|breakfast/i.test(c.combo_name)?"toast":/snack|roll/i.test(c.combo_name)?"snacks":"family";
 let meals=[],cart={},category="All",closed=true,placing=false,deferredPrompt=null;
 const $=id=>document.getElementById(id),money=n=>Number(n).toLocaleString("en-KE");
 function kenyaMinutes(){const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Africa/Nairobi",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());return Number(p.find(x=>x.type==="hour").value)*60+Number(p.find(x=>x.type==="minute").value)}
