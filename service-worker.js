@@ -1,13 +1,13 @@
 
-const CACHE_NAME = "savannah-fast-food-v3";
+const CACHE_NAME = "savannah-fast-food-v4";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./staff.html",
   "./manifest.json",
-  "./icons/icon-192.svg",
-  "./icons/icon-512.svg"
+  "./icons/icons/icon-192.svg",
+  "./icons/icons/icon-512.svg"
 ];
 
 self.addEventListener("install", event => {
